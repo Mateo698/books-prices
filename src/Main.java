@@ -8,20 +8,17 @@ import java.util.Arrays;
 public class Main {
 
 	public static void main(String[] args) throws IOException {
-		int i = 0;
-		int j;
+		int i = -1;
+		int j = -1;
 		int M;
 		String output = "";
 		
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
-		
 		boolean leave = false;
 		while(!leave) {
-			i=0;
-			j=0;
-			M=0;
-			
+			i = -1;
+			j = -1;
 			String firstEntry = br.readLine();
 			if(firstEntry.equals("")) {
 				firstEntry = br.readLine();
@@ -30,8 +27,6 @@ public class Main {
 				}
 				else {
 					int amount = Integer.parseInt(firstEntry);
-					System.out.println(amount);
-					j = amount - 1;
 					int[] array = new int[amount];
 					String[] stArray = br.readLine().split(" ");
 					for(int x=0;x<amount;x++) {
@@ -39,33 +34,28 @@ public class Main {
 					}
 					Arrays.sort(array);
 					M = Integer.parseInt(br.readLine());
-					M = M/2;
 					
-					boolean found = false;
-					while(i <= j && !found) {
-						int med = (i+j)/2;
-						if(array[med] == M) {
-							found = true;
-						}
-						else if(array[med] > M) {
-							j = med - 1;
-						}
-						else {
-							i = med + 1;
-						}
-					}
-					if(array[i]>array[j]) {
-						int temp = i;
-						i = j;
-						j = temp;
-					}
-					output += "Peter should buy books whose prices are " + array[i] + " and " + array[j] + ".\n" ;
+					for(int x=0; x<array.length-1; x++){
+			            
+			            for(int y=x+1; y<array.length; y++){
+			                
+			                if(array[x]+array[y] == M ){
+			                    if( i == -1 && j == -1 ){
+			                        i = x;
+			                        j = y;
+			                    }
+			                    else if(Math.abs(array[x]-array[y])<Math.abs(array[i]-array[j]) ){
+			                        i=x;
+			                        j=y;
+			                    }
+			                }
+			            }
+			        }
+					output += "Peter should buy books whose prices are " + array[i] + " and " + array[j] + ".\n" + "\n" ;
 				}
 			}
 			else {
 				int amount = Integer.parseInt(firstEntry);
-				System.out.println(amount);
-				j = amount - 1;
 				int[] array = new int[amount];
 				String[] stArray = br.readLine().split(" ");
 				for(int x=0;x<amount;x++) {
@@ -73,29 +63,27 @@ public class Main {
 				}
 				Arrays.sort(array);
 				M = Integer.parseInt(br.readLine());
-				M = M/2;
 				
-				boolean found = false;
-				while(i <= j && !found) {
-					int med = (i+j)/2;
-					if(array[med] == M) {
-						found = true;
-					}
-					else if(array[med] > M) {
-						j = med - 1;
-					}
-					else {
-						i = med + 1;
-					}
-				}
-				if(array[i]>array[j]) {
-					int temp = i;
-					i = j;
-					j = temp;
-				}
-				output += "Peter should buy books whose prices are " + array[i] + " and " + array[j] + ".\n" ;
+				for(int x=0; x<array.length-1; x++){
+		            
+		            for(int y=x+1; y<array.length; y++){
+		                
+		                if(array[x]+array[y] == M ){
+		                    if( i == -1 && j == -1 ){
+		                        i = x;
+		                        j = y;
+		                    }
+		                    else if(Math.abs(array[x]-array[y])<Math.abs(array[i]-array[j]) ){
+		                        i=x;
+		                        j=y;
+		                    }
+		                }
+		            }
+		        }
+				output += "Peter should buy books whose prices are " + array[i] + " and " + array[j] + ".\n" + "\n";
 			}
 		}
+		
 		
 		bw.write(output);
 		bw.flush();
